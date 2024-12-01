@@ -1,0 +1,1 @@
+Liczba spacji w pliku 'text.txt': 6
