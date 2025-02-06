@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kalkulator</h1>
+        <form onsubmit="calculate(event)">
+            <input type="number" name="liczba1" required>
+            <select name="dzialanie" required>
+                <option value="dodawanie">+</option>
+                <option value="odejmowanie">-</option>
+                <option value="mnozenie">*</option>
+                <option value="dzielenie">/</option>
+            </select>
+            <input type="number" name="liczba2" required>
+            <input type="submit" value="Oblicz">
+        </form>
+        <h2 id="result"></h2>
+    </div>
+
+
+    <script>
+        function calculate(event) {
+            event.preventDefault();
+            const liczba1 = parseInt(event.target.liczba1.value);
+            const liczba2 = parseInt(event.target.liczba2.value);
+            const dzialanie = event.target.dzialanie.value;
+            let result = 0;
+
+            switch (dzialanie) {
+                case 'dodawanie':
+                    result = liczba1 + liczba2;
+                    break;
+                case 'odejmowanie':
+                    result = liczba1 - liczba2;
+                    break;
+                case 'mnozenie':
+                    result = liczba1 * liczba2;
+                    break;
+                case 'dzielenie':
+                    if (liczba2 === 0) {
+                        document.getElementById('result').innerText = 'Nie można dzielić przez 0!';
+                        return;
+                    }
+                    result = liczba1 / liczba2;
+                    break;
+            }
+
+            document.getElementById('result').innerText = `Wynik: ${result}`;
+        }
+    </script>
+</body>
+
+</html>
