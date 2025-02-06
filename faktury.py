@@ -12,11 +12,13 @@ def extract_data_from_pdf(pdf_path):
         bilet_match = re.search(r"Bilet nr:\s*(\S+)", text)
         faktura_match = re.search(r"Faktura VAT Nr\s*(\S+)", text)
         data_match = re.search(r"Data wystawienia:\s*(\d{2}\.\d{2}\.\d{4})", text)
+        paid_match = re.search(r"Zapłacono:\s*(\d+[.,]\d{2})\s*zł", text)
         
         return [
             bilet_match.group(1) if bilet_match else "Brak",
             faktura_match.group(1) if faktura_match else "Brak",
-            data_match.group(1) if data_match else "Brak"
+            data_match.group(1) if data_match else "Brak",
+            paid_match.group(1) if paid_match else "Brak"
         ]
 
 def process_pdfs(files_list, output_file):
@@ -25,7 +27,7 @@ def process_pdfs(files_list, output_file):
         extracted_data = extract_data_from_pdf(file)
         data.append(extracted_data)
     
-    df = pd.DataFrame(data, columns=["Bilet nr", "Faktura VAT Nr", "Data wystawienia"])
+    df = pd.DataFrame(data, columns=["Bilet nr", "Faktura VAT Nr", "Data wystawienia", "Zapłacono"])
     df.to_excel(output_file, index=False)
     messagebox.showinfo("Info", f"Przetwarzanie zakończone. Plik zapisano jako: {output_file}")
 
